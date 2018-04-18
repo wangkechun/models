@@ -178,8 +178,12 @@ def main(_):
 
     tf.logging.info('Evaluating %s' % checkpoint_path)
 
+    sess_config = tf.ConfigProto(allow_soft_placement=True)
+    sess_config.gpu_options.allow_growth=True
+
     slim.evaluation.evaluate_once(
         master=FLAGS.master,
+        session_config=sess_config,
         checkpoint_path=checkpoint_path,
         logdir=FLAGS.eval_dir,
         num_evals=num_batches,
